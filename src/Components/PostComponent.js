@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { addComment, deleteComment, likePost } from '../Redux/ActionCreators';
+import { addComment, deleteComment, likePost } from '../redux/ActionCreators';
 import { FiHeart } from 'react-icons/fi'
 import { IoChatbubbleOutline } from 'react-icons/io5'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { AiOutlinePlusCircle } from '../redux/reducer/node_modules/react-icons/ai'
 
 const mapStateToProps = state => {
     return {
