@@ -1,5 +1,5 @@
 import { AiOutlineTransaction } from 'react-icons/ai';
-import { POSTS } from '../../StaticData/Post';
+import { POSTS } from '../../myInfo/Post';
 import * as ActionTypes from '../ActionTypes'
 
 

@@ -1,4 +1,4 @@
-import { USERS } from '../../StaticData/User';
+import { USERS } from '../../myInfo/User';
 
 
 export const Users = (state = USERS, action) => {
