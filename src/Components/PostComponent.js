@@ -4,6 +4,7 @@ import { addComment, deleteComment, likePost } from '../redux/ActionCreators';
 import { FiHeart } from 'react-icons/fi'
 import { IoChatbubbleOutline } from 'react-icons/io5'
 import { AiOutlinePlusCircle } from '../redux/reducer/node_modules/react-icons/ai'
+import ReactTimeAgo from 'react-time-ago'
 
 const mapStateToProps = state => {
     return {
@@ -22,6 +23,25 @@ const mapDispatchToProps = dispatch => ({
 class Post extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            comment: ""
+        }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        const { name, value } = event.target
+        this.setState({
+            [name]: value
+        })
+    }
+    handleSubmit(event) {
+        this.props.addComment(this.state.comment, this.props.postId, this.props.userId, Date.now());
+        this.setState({
+            comment: ""
+        })
+        event.preventDefault();
     }
 
     componentDidUpdate() {
@@ -52,7 +72,18 @@ class Post extends Component {
                                     </div>
                                     <div className="comment-section">
                                         <div className="comment-list">
-                                            <Comment comment={this.props.comments} user={user[0]} deleteComment={this.props.deleteComment} />
+                                            {
+                                                comment.comments.map((c) => {
+                                                    return (
+                                                        <div className="comment-list-item" key={c.id}>
+                                                            <img src={user.image}></img>
+                                                            <p><strong>{user.name}</strong> - {c.comment}<br/><br/><i><ReactTimeAgo date={c.timeAgo} locale="en-US" />
+                                                            &nbsp;&nbsp; 
+                                                            <a href="#" onClick={() => deleteComment(c.id)}>Delete</a></i></p>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
                                         </div>
                                         <div className="post-likes">
                                             <div className="post-likes-inner">
@@ -62,7 +93,19 @@ class Post extends Component {
                                             </div>
                                         </div>
                                         <div className="post-comment">
-                                            <Form addComment={this.props.addComment} userId={user[0].id} postId={post.id} />
+                                            <div>
+                                                <form onSubmit={this.handleSubmit}>
+                                                    <input
+                                                        type="text"
+                                                        value={this.state.comment}
+                                                        name="comment"
+                                                        placeholder="Write Comment Here"
+                                                        onChange={this.handleChange}
+                                                        autoComplete="off">
+                                                    </input>
+                                                    <button type="submit">Post</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
